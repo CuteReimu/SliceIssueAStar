@@ -1,0 +1,23 @@
+name: Run
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Run on OTP 26.1.1 and ubuntu-latest
+    runs-on: ubuntu-latest
+    container:
+      image: erlang:'26.1.1'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run
+        run: |
+          cd src
+          erlc AStar.erl
+          erl -noshell -s AStar answer -s init stop
