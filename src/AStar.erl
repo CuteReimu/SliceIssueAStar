@@ -45,13 +45,13 @@ get_4_directions(8) -> [5, 7, 9];
 get_4_directions(9) -> [6, 8].
 
 display(Problem, IndexOf0, Index1) when IndexOf0 - Index1 == 1 ->
-  integer_to_list(element(Index1, Problem)) ++ "→";
+  integer_to_list(element(Index1, Problem)) ++ " move right";
 display(Problem, IndexOf0, Index1) when IndexOf0 - Index1 == -1 ->
-  integer_to_list(element(Index1, Problem)) ++ "←";
+  integer_to_list(element(Index1, Problem)) ++ " move left";
 display(Problem, IndexOf0, Index1) when IndexOf0 - Index1 == 3 ->
-  integer_to_list(element(Index1, Problem)) ++ "↓";
+  integer_to_list(element(Index1, Problem)) ++ " move down";
 display(Problem, IndexOf0, Index1) when IndexOf0 - Index1 == -3 ->
-  integer_to_list(element(Index1, Problem)) ++ "↑".
+  integer_to_list(element(Index1, Problem)) ++ " move up".
 
 display_result(Hash, Result) ->
   case Result of
@@ -59,7 +59,7 @@ display_result(Hash, Result) ->
       ok;
     #{Hash := {LastHash, _, Display}} ->
       display_result(LastHash, Result),
-      io:format("~ts~n", [Display])
+      io:format("~s~n", [Display])
   end.
 
 a_star([{_, Hash, {1, 2, 3, 4, 5, 6, 7, 8, 0}} | _], _, Result) ->
