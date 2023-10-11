@@ -18,7 +18,7 @@ answer() ->
 % A*算法
 a_star([#open_data{hash = Hash, problem = {1, 2, 3, 4, 5, 6, 7, 8, 0}} | _], _, Result) ->
   display_result(Hash, Result);
-a_star([#open_data{hash = Hash, problem = Problem} | OpenList], CloseSet, Result) ->
+a_star(L = [#open_data{hash = Hash, problem = Problem} | OpenList], CloseSet, Result) ->
   #{Hash := #result{distance = Dist}} = Result,
   IndexOf0 = index_of_0(Problem),
   Directions = get_4_directions(IndexOf0),
@@ -40,7 +40,7 @@ a_star([#open_data{hash = Hash, problem = Problem} | OpenList], CloseSet, Result
     end, {OpenList, Result}, Directions),
   a_star(NewOpenList, sets:add_element(Hash, CloseSet), NewResult).
 
-% 计算哈夫曼距离
+% 计算曼哈顿距离
 cal_dist(Problem) ->
   lists:foldl(
     fun(Index, AccIn) ->
@@ -89,9 +89,9 @@ display(Problem, IndexOf0, Index1) when IndexOf0 - Index1 == -3 ->
 % 输出结果
 display_result(Hash, Result) ->
   case Result of
-    #{Hash := {_, 0, _}} ->
+    #{Hash := #result{distance = 0}} ->
       ok;
-    #{Hash := {LastHash, _, Display}} ->
+    #{Hash := #result{last_hash = LastHash, display = Display}} ->
       display_result(LastHash, Result),
       io:format("~s~n", [Display])
   end.
