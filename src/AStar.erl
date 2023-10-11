@@ -3,7 +3,7 @@
 %% API
 -export([answer/0]).
 
--record(open_data, {distance, hash, problem}).
+-record(open_data, {predict_distance, hash, problem}).
 -record(result, {last_hash = 0, distance = 0, display = ""}).
 
 answer() ->
@@ -13,12 +13,13 @@ answer() ->
     1, 6, 7
   },
   Hash = erlang:phash2(Problem),
-  a_star([#open_data{distance = cal_dist(Problem), hash = Hash, problem = Problem}], sets:new(), #{Hash => #result{}}).
+  a_star([#open_data{predict_distance = cal_dist(Problem), hash = Hash, problem = Problem}], sets:new(), #{Hash => #result{}}).
 
 % A*算法
 a_star([#open_data{hash = Hash, problem = {1, 2, 3, 4, 5, 6, 7, 8, 0}} | _], _, Result) ->
   display_result(Hash, Result);
-a_star([#open_data{distance = Dist, hash = Hash, problem = Problem} | OpenList], CloseSet, Result) ->
+a_star([#open_data{hash = Hash, problem = Problem} | OpenList], CloseSet, Result) ->
+  #{Hash := #result{distance = Dist}} = Result,
   IndexOf0 = index_of_0(Problem),
   Directions = get_4_directions(IndexOf0),
   {NewOpenList, NewResult} = lists:foldl(
@@ -28,7 +29,7 @@ a_star([#open_data{distance = Dist, hash = Hash, problem = Problem} | OpenList],
       NewAccOpenList =
         case sets:is_element(NewHash, CloseSet) of
           true -> AccOpenList;
-          false -> ordsets:add_element(#open_data{distance = Dist + cal_dist(NewProblem), hash = NewHash, problem = NewProblem}, AccOpenList)
+          false -> ordsets:add_element(#open_data{predict_distance = Dist + 1 + cal_dist(NewProblem), hash = NewHash, problem = NewProblem}, AccOpenList)
         end,
       NewAccResult =
         case Result of
