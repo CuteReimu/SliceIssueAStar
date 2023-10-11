@@ -17,29 +17,29 @@
 输出：
 
 ```
-2↑
-6↑
-7←
-8↓
-4↓
-2→
-6↑
-5→
-1↑
-7←
-5↓
-4←
-2↓
-6→
-3→
-1↑
-4←
-2←
-6↓
-3→
-2↑
-5↑
-8←
+2 move up
+6 move up
+7 move left
+8 move down
+4 move down
+2 move right
+6 move up
+5 move right
+1 move up
+7 move left
+5 move down
+4 move left
+2 move down
+6 move right
+3 move right
+1 move up
+4 move left
+2 move left
+6 move down
+3 move right
+2 move up
+5 move up
+8 move left
 ```
 
 ## 遗留问题：
