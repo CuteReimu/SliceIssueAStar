@@ -18,7 +18,7 @@ answer() ->
 % A*算法
 a_star([#open_data{hash = Hash, problem = {1, 2, 3, 4, 5, 6, 7, 8, 0}} | _], _, Result) ->
   display_result(Hash, Result);
-a_star(L = [#open_data{hash = Hash, problem = Problem} | OpenList], CloseSet, Result) ->
+a_star([#open_data{hash = Hash, problem = Problem} | OpenList], CloseSet, Result) ->
   #{Hash := #result{distance = Dist}} = Result,
   IndexOf0 = index_of_0(Problem),
   Directions = get_4_directions(IndexOf0),
